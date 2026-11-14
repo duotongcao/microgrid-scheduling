@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 运行产物
+result*.xlsx
+model_summary.xlsx
+论文结果汇总.xlsx
+src/论文图表/
+
+# 编辑器 / 系统
+.DS_Store
+.idea/
+.vscode/
