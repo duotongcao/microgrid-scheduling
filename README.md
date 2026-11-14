@@ -45,34 +45,33 @@ Pure `numpy / scipy / scikit-learn` — **no commercial solver required**（MILP
 pip install -r requirements.txt
 
 # 没有竞赛原始附件时，先生成一份同格式合成数据（写在仓库根目录）
-python demo/make_demo_data.py
+python make_demo_data.py
 
 # 从仓库根目录运行完整四问
-python src/microgrid.py
+python microgrid.py
 ```
 
 有原始附件时，直接把 `附件1(2).xlsx` ~ `附件4(2).xlsx` 放到仓库根目录，跳过第一步。文件名也兼容去掉 `(2)` 的版本。
 
 实测耗时（单机单进程，365 天）：Q1 约 0.02 s，Q2 单档裕度约 3 s，Q3 全年滚动约 20 s，**全流程约 1 分 45 秒**。
 
-输出写在 `src/` 下：`result1.xlsx` ~ `result4-3.xlsx`、`model_summary.xlsx`（逐时段功率、SOC、成本与汇总），以及 `src/论文图表/` 全套论文配图。
+输出写在仓库根目录：`result1.xlsx` ~ `result4-3.xlsx`、`model_summary.xlsx`（逐时段功率、SOC、成本与汇总），以及 `论文图表/` 全套论文配图。
 
 ## 四、目录结构
 
 ```
 .
-├── src/
-│   ├── microgrid.py          # 主程序：数据读取 → Q1-Q4 求解 → Excel 输出 → 论文图表
-│   └── 论文图表/              # 运行时自动生成
-├── demo/
-│   └── make_demo_data.py     # 生成 365 天同格式合成数据（负荷/光伏/预报/电价）
+├── microgrid.py              # 主程序：数据读取 → Q1-Q4 求解 → Excel 输出 → 论文图表
+├── make_demo_data.py         # 生成 365 天同格式合成数据（负荷/光伏/预报/电价）
+├── requirements.txt
 ├── 附件1(2).xlsx             # 基准日：时间、电价、负荷、光伏预测
 ├── 附件2(2).xlsx             # 全年实际：小区负载 / 光伏发电实际功率
 ├── 附件3(2).xlsx             # 0/6/12/18 时发布的未来 24 h 光伏预报
-└── 附件4(2).xlsx             # 全年动态电价
+├── 附件4(2).xlsx             # 全年动态电价
+└── 论文图表/                  # 运行时自动生成
 ```
 
-`src/microgrid.py` 内部按 `0. 全局参数 → 1. 路径 → 2. 数据结构 → 3-7. 附件读取 → 8-11. 单日模型 → 12-15. Q1-Q4 → 16. main → 17. 论文结果增强` 分段组织，文件头有完整的「模型—程序对应关系」注释块。
+`microgrid.py` 内部按 `0. 全局参数 → 1. 路径 → 2. 数据结构 → 3-7. 附件读取 → 8-11. 单日模型 → 12-15. Q1-Q4 → 16. main → 17. 论文结果增强` 分段组织，文件头有完整的「模型—程序对应关系」注释块。
 
 ## 五、几个值得看的实现细节
 
@@ -114,3 +113,5 @@ BP 网络学习「附件 3 原始预报 → 实际光伏」的系统偏差，前
 [1] 姜启源, 谢金星, 叶俊. 数学模型（第五版）. 高等教育出版社, 2018.
 [2] 司守奎, 孙兆亮. 数学建模算法与应用（第 3 版）. 国防工业出版社, 2021.
 [3] SciPy `optimize.milp` / HiGHS 文档：https://docs.scipy.org/doc/scipy/reference/optimize.html
+
+> （注：部分内容由豆包 AI 生成）
